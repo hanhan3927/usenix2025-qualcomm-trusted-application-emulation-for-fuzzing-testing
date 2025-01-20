@@ -1,9 +1,10 @@
-### Unicorn base trusted appliction fuzzing 
+# [USENIX Security 2025] Qualcomm Trusted Application Emulation for Fuzzing Testing
+## Unicorn base trusted appliction fuzzing 
 
 This tool is based on unicorn engine for emualting arm64 Pixel4-XL trusted application.
 
 
-### Emulator
+## Emulator
 
 The emualtor we design some debugging features for code tracing, it can partial emualte the code we're interesting.
 The debug feature including memory hexdump, register dump, and instruction dump !
@@ -14,14 +15,14 @@ Example usage :
     ./make
     ./emualtor pixel4_widevine
 
-### Loader Design
+## Loader Design
 
 The loader parse the ELF binary file, and basically simply place whole the library address in the GOT table, 
 when the program use it, the emulator can also jump on the address and execute the code in the library.
 
 
 
-### Fuzzing testing
+## Fuzzing testing
 
 Install afl-plusplus with unicorn mode first, and change the Makefile file.
 For example change the unicorn library path and the fuzzer path to compile and fuzz the binary.
