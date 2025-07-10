@@ -1,49 +1,92 @@
-# [USENIX Security 2025] Qualcomm Trusted Application Emulation for Fuzzing Testing
-## Unicorn base trusted appliction fuzzing 
+# Qualcomm Trusted Application Emulation for Fuzzing Testing
+## USENIX Security 2025 Poster Submission
 
-This tool is based on unicorn engine for emualting arm64 Pixel4-XL trusted application.
+**Status:** Under Review
 
+*This work is currently under review for USENIX Security 2025 poster session.*
 
-## Emulator
+---
 
-The emualtor we design some debugging features for code tracing, it can partial emualte the code we're interesting.
-The debug feature including memory hexdump, register dump, and instruction dump !
+## Overview
 
-Also the hook can be used to hook the library code, its very convenience for debugging the enviroment.
+This tool is based on the Unicorn Engine for emulating ARM64 Pixel 4-XL trusted applications. The emulator includes debugging features for code tracing and can partially emulate code of interest.
 
-Example usage : 
-    ./make
-    ./emualtor pixel4_widevine
+## Features
+
+### Emulator
+The emulator provides comprehensive debugging capabilities:
+- **Memory hexdump** - Inspect memory contents
+- **Register dump** - View processor register states  
+- **Instruction dump** - Trace executed instructions
+- **Hook functionality** - Hook library code for convenient debugging environment setup
+
+### Example Usage
+```bash
+./make
+./emulator pixel4_widevine
+```
 
 ## Loader Design
 
-The loader parse the ELF binary file, and basically simply place whole the library address in the GOT table, 
-when the program use it, the emulator can also jump on the address and execute the code in the library.
+The loader parses ELF binary files and places library addresses in the GOT (Global Offset Table). When the program references these addresses, the emulator can jump to and execute the corresponding library code.
 
+## Fuzzing Testing
 
+### Prerequisites
+1. Install AFL++ with Unicorn mode support
+2. Configure the Makefile with your environment paths
 
-## Fuzzing testing
+### Configuration
 
-Install afl-plusplus with unicorn mode first, and change the Makefile file.
-For example change the unicorn library path and the fuzzer path to compile and fuzz the binary.
+Update the following paths in your Makefile according to your environment:
 
-Below `PATH` need to change to your environmnet    
-    -I/PATH afl-unicorn install directory 
-    UNICORNAFL_LIB : Configure it as your install directory
-    UNICORN_LIB : Configure it as your install directory
+```makefile
+# AFL-Unicorn installation directory
+-I/PATH_TO_AFL_UNICORN_INSTALL_DIR
 
-Add the static library path to compile the harness.
-    $(CC) $^ PATH/libunicornafl.a $(LDFLAGS) -o $(EXE)
+# Configure unicorn library paths
+UNICORNAFL_LIB: /PATH_TO_YOUR_INSTALL_DIR
+UNICORN_LIB: /PATH_TO_YOUR_INSTALL_DIR
+```
 
-Add the path LD_LIBRARY_PATH and DYLD_FALLBACK_LIBRARY_PATH, and afl-fuzz path.
+### Compilation
+Add the static library path to compile the harness:
+```makefile
+$(CC) $^ /PATH_TO_LIBUNICORNAFL.a $(LDFLAGS) -o $(EXE)
+```
+
+### Fuzzing Execution
+Configure library paths and AFL-fuzz path:
+```makefile
 fuzz: $(EXE)
-    DYLD_FALLBACK_LIBRARY_PATH="/PATH/AFLplusplus/unicorn_mode/unicornafl/unicorn/build" LD_LIBRARY_PATH="/PATH/AFLplusplus/unicorn_modeunicornafl/unicorn/build" /PATH/AFLplusplus/afl-fuzz -m none -i sample_inputs -o out -t+1000 -- ./harness @@
+    DYLD_FALLBACK_LIBRARY_PATH="/PATH/AFLplusplus/unicorn_mode/unicornafl/unicorn/build" \
+    LD_LIBRARY_PATH="/PATH/AFLplusplus/unicorn_mode/unicornafl/unicorn/build" \
+    /PATH/AFLplusplus/afl-fuzz -m none -i sample_inputs -o out -t+1000 -- ./harness @@
+```
 
+### Pre-fuzzing Setup
+Before starting fuzzing, run as root:
+```bash
+echo core >/proc/sys/kernel/core_pattern
+```
+This prevents core dump errors during fuzzing.
 
-Loader will load the dependency library inside the emulator, but it may encounter some crash when reaching the uninitialize variables,
-it can be fixed by using the debug utils and trace it !
+### Example Usage
+```bash
+make fuzz  # Compiles and starts fuzzing
+```
 
-Before fuzzing, enter root and set `echo core >/proc/sys/kernel/core_pattern` to avoid the error.
+## Troubleshooting
 
-Example usage:
-    make fuzz (It will compile it and start fuzzing)
+The loader loads dependency libraries inside the emulator but may encounter crashes when reaching uninitialized variables. These issues can be resolved using the debug utilities and tracing functionality.
+
+## Quick Start
+1. Clone the repository
+2. Configure paths in Makefile
+3. Run `make` to build
+4. Execute `./emulator pixel4_widevine` for basic emulation
+5. Run `make fuzz` to start fuzzing testing
+
+---
+
+*This work is currently under review for the USENIX Security 2025 poster session. Technical details and implementation specifics are subject to revision based on review feedback.*
