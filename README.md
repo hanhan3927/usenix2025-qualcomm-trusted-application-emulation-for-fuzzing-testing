@@ -5,6 +5,9 @@
 
 *This work is currently under review for USENIX Security 2025 poster session.*
 
+## Full Technical Paper
+
+Preprint: 
 ---
 
 ## Overview
@@ -89,4 +92,4 @@ The loader loads dependency libraries inside the emulator but may encounter cras
 
 ---
 
-*This work is currently under review for the USENIX Security 2025 poster session. Technical details and implementation specifics are subject to revision based on review feedback.*
+*This work is currently under review for the USENIX Security 2025 poster session. The full technical paper is available as a preprint on arXiv for detailed methodology and experimental results.*
