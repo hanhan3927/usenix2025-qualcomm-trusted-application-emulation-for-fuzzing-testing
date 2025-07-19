@@ -1,13 +1,13 @@
 # Qualcomm Trusted Application Emulation for Fuzzing Testing
 ## USENIX Security 2025 Poster Submission
 
-**Status:** Under Review
+**Status:** Accepted
 
-*This work is currently under review for USENIX Security 2025 poster session.*
+*This work will be presented at USENIX Security 2025 poster session.*
 
 ## Full Technical Paper
 
-Preprint: 
+Preprint: [arXiv](https://arxiv.org/abs/2507.08331)
 
 ---
 
