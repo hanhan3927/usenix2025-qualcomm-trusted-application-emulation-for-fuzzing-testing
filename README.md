@@ -1,5 +1,5 @@
 # Qualcomm Trusted Application Emulation for Fuzzing Testing
-## USENIX Security 2025 Poster Submission
+## USENIX Security 2025 Poster Session
 
 **Status:** Accepted
 
@@ -94,3 +94,4 @@ The loader loads dependency libraries inside the emulator but may encounter cras
 ---
 
 *This work is currently under review for the USENIX Security 2025 poster session. The full technical paper is available as a preprint on arXiv for detailed methodology and experimental results.*
+
