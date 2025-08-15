@@ -93,5 +93,6 @@ The loader loads dependency libraries inside the emulator but may encounter cras
 
 ---
 
-*This work is currently under review for the USENIX Security 2025 poster session. The full technical paper is available as a preprint on arXiv for detailed methodology and experimental results.*
+*This work i has been accepted for presentation at the USENIX Security 2025 poster session. The full technical paper is available as a preprint on arXiv for detailed methodology and experimental results.*
+
 
